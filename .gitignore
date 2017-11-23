@@ -4,11 +4,7 @@
 *.iml
 *.csv
 .idea/.name
-<<<<<<< HEAD
 
-*.csv
-=======
 .data/**
->>>>>>> origin/master
 
 *.json
