@@ -2,5 +2,6 @@
 *.xml
 
 *.iml
-
+*.csv
 .idea/.name
+.data/**
