@@ -16,44 +16,19 @@ def loadcsv(fname):
         all_data.append(row)
     return all_data
 
-def getUniques(l):
-    n = []
-    for x in l:
-        if x in n:
-            continue
-        else:
-            n.append(l)
-    fd = {}
-    for i, item in enumerate(n):
-        fd[item] = i
-    return fd
-
-#date in format year, month, day
+#date in format {year:year, month:month, day:day}
 def parse_date(date):
-    return date.split('-')
+    s = date.split('-')
+    return {'year': int(s[0]), 'month':int(s[1]), 'day':int(s[2])}
 
 #final matrix will be allitems * all stores * other info *date
 def getInfoByDate(date):
-    trainInfo = []
-    with open('data/smalltrain.csv') as st:
-        reader = csv.reader(st, delimiter=',')
-        for row in reader:
-            if row[0]==date:
-                trainInfo.append(row)
-    oilData = []
-    with open('data/oil.csv') as st:
-        reader = csv.reader(st, delimiter=',')
-        for row in reader:
-            if row[0]==date:
-                oilData.append(row)
-    transactions = []
-    with open('data/transactions.csv') as tf:
-        reader = csv.reader(st, delimiter=',')
-        for row in reader:
-            if row[0]==date:
-                transactions.append(row)
+    trainInfo = loadcsv('data/smalltrain.csv')
+    oilData = loadcsv('data/oil.csv')
+    transactions = loadcsv('data/transactions.csv')
     return trainInfo, oilData, transactions
 
+#data in format {family: str, class: int, perishable: 1/O}
 def getItemInfo(itemNum):
     with open('data/items.csv') as items:
         reader = csv.reader(items,delimiter=',')
@@ -64,6 +39,41 @@ def getItemInfo(itemNum):
                 data['class'] = row[2]
                 data['perishable'] = row[3]
     return data
+
+
+#row has item_num, oil, family, class, perishable, transactions, year, month, day, unit sales
+def createRow(item_num, train, oil, trans, date):
+    row = [item_num]
+    row.append(oil[0][1])
+
+    #sum over unit sales for a given date
+    all_d = []
+    for r in train:
+        if r[3]==item_num:
+            all_d.append(r[5])
+    sales = np.sum(all_d)
+
+    #add item info
+    itemInfo = getItemInfo(item_num)
+    row.append(itemInfo['family'])
+    row.append(itemInfo['class'])
+    row.append(itemInfo['perishable'])
+
+    #sum over transactions for a given date
+    all_t = []
+    for t in trans:
+        all_t.append(t[2])
+    row.append(np.sum(all_t))
+
+    #date
+    d = parse_date(date)
+    row.append(d['year'])
+    row.append(d['month'])
+    row.append(d['day'])
+
+    row.append(sales)
+
+
 
 def finalMatrix(date):
     train, oil, trans = getInfoByDate(date)
