@@ -50,3 +50,7 @@ def groceryClass():
         fd[u] = i
     with open('data/Dictionaries/classes.json','w') as wf:
         wf.write(json.dumps(fd))
+
+itemsDict()
+groceryClass()
+groceryDict()
