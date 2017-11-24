@@ -14,3 +14,6 @@
 *.pickle
 
 *.pickle
+*.pickle
+data/temp/transactions.pickle
+data/temp/oil.pickle
