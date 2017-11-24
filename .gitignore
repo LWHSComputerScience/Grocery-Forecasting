@@ -5,7 +5,7 @@
 *.csv
 .idea/.name
 *.pickle
-.data/**
+.data/
 
 *.json
 
@@ -14,6 +14,7 @@
 *.pickle
 
 *.pickle
+<<<<<<< HEAD
 
 *.pickle
 
@@ -22,3 +23,8 @@ data/temp/holiday_events.pickle
 data/temp/holiday_events.pickle
 
 data/
+=======
+*.pickle
+data/temp/transactions.pickle
+data/temp/oil.pickle
+>>>>>>> origin/master
