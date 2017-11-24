@@ -46,19 +46,19 @@ def parallelize_dataframe(df, func):
 
 if __name__ == '__main__':
     #only uncomment if first time running dataprep
-    # oil = pd.read_csv("data/oil.csv")
-    # stores = pd.read_csv("data/stores.csv")
-    # holidays_events = pd.read_csv("data/holidays_events.csv")
-    # transactions = pd.read_csv("data/transactions.csv")
-    # items = pd.read_csv("data/items.csv")
-    # print(oil.isnull().sum())
-    # oil = oil.fillna(method="pad")
-    # oil = oil.fillna(value=93.14, limit=1)
-    # oil.to_pickle("data/temp/oil.pickle")
-    # stores.to_pickle("data/temp/stores.pickle")
-    # holidays_events.to_pickle("data/temp/holiday_events.pickle")
-    # transactions.to_pickle("data/temp/transactions.pickle")
-    # items.to_pickle("data/temp/items.pickle")
+    oil = pd.read_csv("data/oil.csv")
+    stores = pd.read_csv("data/stores.csv")
+    holidays_events = pd.read_csv("data/holidays_events.csv")
+    transactions = pd.read_csv("data/transactions.csv")
+    items = pd.read_csv("data/items.csv")
+    print(oil.isnull().sum())
+    oil = oil.fillna(method="pad")
+    oil = oil.fillna(value=93.14, limit=1)
+    oil.to_pickle("data/temp/oil.pickle")
+    stores.to_pickle("data/temp/stores.pickle")
+    holidays_events.to_pickle("data/temp/holiday_events.pickle")
+    transactions.to_pickle("data/temp/transactions.pickle")
+    items.to_pickle("data/temp/items.pickle")
     mypath = "data/train/"
     trainFileList = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
 

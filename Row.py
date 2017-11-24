@@ -1,6 +1,7 @@
 import numpy as np
 import csv
 import json
+import random
 
 def loadcsv(fname):
     f = open(fname)
@@ -27,11 +28,11 @@ def parse_date(date):
 
 def getInfoByDate(date):
     info = {'train':[],'transactions':[]}
-    trainInfo = loadcsv('data/smalltrain.csv')
+    trainInfo = loadcsv('data/train/output_1.csv')
     oilData = loadcsv('data/oil.csv')
     transactions = loadcsv('data/transactions.csv')
     for t in trainInfo:
-        if str(t[0])==date:
+        if str(t[1])==date:
             info['train'].append(t)
     for o in oilData:
         if str(o[0])==date:
@@ -52,8 +53,10 @@ def sortByStore(train, transactions, storeNum):
         if tr[1]==storeNum:
             transStore = tr
             break
-    return trainStore, transStore
-
+    try:
+        return trainStore, transStore
+    except UnboundLocalError:
+        return trainStore, str(1695)
 #returns two variables: a row of train and a row of transactions
 def trainTrans(dated, storeNum, itemNum):
     trainStore, transStore = sortByStore(dated['train'],dated['transactions'], storeNum)
@@ -75,7 +78,7 @@ def getItemInfo(itemNum):
 
 #rowSparse: year, month, day,family,class,perishable,storeNum,onPromotion(maybe)
 def getRow(date, itemNum, storeNum):
-    row = {'dense':[], 'date':date, 'itemNum': items[itemNum], 'store':storeNum, 'sparse':[]}
+    row = {'dense':[], 'date':date, 'itemNum': items[str(itemNum)], 'store':storeNum, 'sparse':[]}
     dateInfo = getInfoByDate(date)
     trainInfo, transInfo = trainTrans(dateInfo, storeNum, itemNum)
     itemInfo = getItemInfo(itemNum)
@@ -90,3 +93,15 @@ def getRow(date, itemNum, storeNum):
         row['sparse'].append(trainInfo[5])
     except IndexError:
         row['sparse'].append(0)
+    return row
+
+def findData(n):
+    f = open('data/train/output_' + str(n) + '.csv')
+    reader = csv.reader(f, delimiter=',')
+    r = random.randint(1,100000)
+    for i, row in enumerate(reader):
+        if i==r:
+            return row[1],row[2],row[3]
+f = findData(80)
+getRow(f[0],f[2],f[1])
+#0,2013-01-01,25,103665,7.0,

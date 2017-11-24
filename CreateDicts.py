@@ -51,6 +51,21 @@ def groceryClass():
     with open('data/Dictionaries/classes.json','w') as wf:
         wf.write(json.dumps(fd))
 
+def createDict(name,column, out):
+    data = loadcsv('data/' + name)
+    col = np.array(data)[:,column]
+    fd = {}
+    for i, u in enumerate(col):
+        fd[u]=i
+    with open('data/Dictionaries/' + out,'w') as wf:
+        wf.write(json.dumps(fd))
+
+
+createDict('stores.csv',1,'store.json')
+createDict('stores.csv',2,'cities.json')
+createDict('stores.csv',3,'states.json')
+createDict('stores.csv',4, 'type.json')
+
 # itemsDict()
 # groceryClass()
 # groceryDict()
