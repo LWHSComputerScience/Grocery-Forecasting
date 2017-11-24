@@ -16,3 +16,9 @@
 *.pickle
 
 *.pickle
+
+data/temp/holiday_events.pickle
+
+data/temp/holiday_events.pickle
+
+data/

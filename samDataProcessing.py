@@ -16,9 +16,11 @@ def buildDataSet(mainTrain):
     families = json.loads(open("data/Dictionaries/families.json").read())
     items2 = json.loads(open("data/Dictionaries/items.json").read())
     classes = json.loads(open("data/Dictionaries/classes.json").read())
-    cities = json.loads(open('data/Dictionaries/cities.json').read())
-    states = json.loads(open('data/Dictionaries/states.json').read())
-    types = json.loads(open('data/Dictionaries/type.json').read())
+    cities = json.loads(open("data/Dictionaries/cities.json").read())
+    states = json.loads(open("data/Dictionaries/states.json").read())
+    type = json.loads(open("data/Dictionaries/type.json").read())
+    cluster = json.loads(open("data/Dictionaries/cluster.json").read())
+
 
     # holidays_events = pd.read_pickle("data/temp/holiday_events.pickle")
     transactions = pd.read_pickle("data/temp/transactions.pickle")
@@ -36,7 +38,8 @@ def buildDataSet(mainTrain):
     mainTrain["class"] = mainTrain["class"].apply(lambda x: classes[str(x)])
     mainTrain["city"] = mainTrain["city"].apply(lambda x: cities[str(x)])
     mainTrain["state"] = mainTrain["state"].apply(lambda x: states[str(x)])
-    mainTrain["type"] = mainTrain["type"].apply(lambda x: types[str(x)])
+    mainTrain["type"] = mainTrain["type"].apply(lambda x: type[str(x)])
+    mainTrain["cluster"] = mainTrain["cluster"].apply(lambda x: cluster[str(x)])
     return mainTrain
 
 print("parrrl")
@@ -52,24 +55,24 @@ def parallelize_dataframe(df, func):
 
 if __name__ == '__main__':
     #only uncomment if first time running dataprep
-    # oil = pd.read_csv("data/oil.csv")
-    # stores = pd.read_csv("data/stores.csv")
-    # holidays_events = pd.read_csv("data/holidays_events.csv")
-    # transactions = pd.read_csv("data/transactions.csv")
-    # items = pd.read_csv("data/items.csv")
-    # print(oil.isnull().sum())
-    # oil = oil.fillna(method="pad")
-    # oil = oil.fillna(value=93.14, limit=1)
-    # oil.to_pickle("data/temp/oil.pickle")
-    # stores.to_pickle("data/temp/stores.pickle")
-    # holidays_events.to_pickle("data/temp/holiday_events.pickle")
-    # transactions.to_pickle("data/temp/transactions.pickle")
-    # items.to_pickle("data/temp/items.pickle")
-    # mypath = "data/train/"
-    # trainFileList = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
+    oil = pd.read_csv("data/oil.csv")
+    stores = pd.read_csv("data/stores.csv")
+    holidays_events = pd.read_csv("data/holidays_events.csv")
+    transactions = pd.read_csv("data/transactions.csv")
+    items = pd.read_csv("data/items.csv")
+    print(oil.isnull().sum())
+    oil = oil.fillna(method="pad")
+    oil = oil.fillna(value=93.14, limit=1)
+    oil.to_pickle("data/temp/oil.pickle")
+    stores.to_pickle("data/temp/stores.pickle")
+    holidays_events.to_pickle("data/temp/holiday_events.pickle")
+    transactions.to_pickle("data/temp/transactions.pickle")
+    items.to_pickle("data/temp/items.pickle")
+    mypath = "data/train/"
+    trainFileList = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
 
 
-    num = 4
+    num=1
 
     arrays = []
     for x in range(23,23+num):
@@ -78,6 +81,7 @@ if __name__ == '__main__':
     trainArray = pd.concat(arrays)
     print(trainArray.head(10))
 
-    trainArray.to_pickle("trainArray50MilOnlyStore39.pickle", encoding='utf-8')
+
+    trainArray.to_pickle("trainArray5Mil.pickle")
     testArray = parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(23+num)),buildDataSet)
-    testArray.to_pickle("testArray50MilOnlyStore39.pickle", encoding='utf-8')
+    testArray.to_pickle("testArray5Mil.pickle")
