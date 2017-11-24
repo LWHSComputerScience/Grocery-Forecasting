@@ -4,19 +4,18 @@ import pandas as pd
 from os import listdir
 from os.path import isfile, join
 import json
-import seaborn as sns
 from multiprocessing import Pool
 
 
-# classes = pd.read_json("data/Dictionaries/classes.json")
 
 
 def buildDataSet(mainTrain):
     # mainTrain = mainTrain.loc[mainTrain['store_nbr'] == 39]
     oil = pd.read_pickle("data/temp/oil.pickle")
     stores = pd.read_pickle("data/temp/stores.pickle")
-    # families = pd.read_json("data/Dictionaries/families.json")
-    # items2 = pd.read_json("data/Dictionaries/items.json")
+    families = json.loads(open("data/Dictionaries/families.json").read())
+    items2 = json.loads(open("data/Dictionaries/items.json").read())
+    classes = json.loads(open("data/Dictionaries/classes.json").read())
 
     # holidays_events = pd.read_pickle("data/temp/holiday_events.pickle")
     transactions = pd.read_pickle("data/temp/transactions.pickle")
@@ -29,9 +28,9 @@ def buildDataSet(mainTrain):
     mainTrain["month"] = mainTrain["date"].apply(lambda x: x.month)
     mainTrain["year"] = mainTrain["date"].apply(lambda x: x.year)
     mainTrain["day"] = mainTrain["date"].apply(lambda x: x.day)
-    # mainTrain["items"] = mainTrain["items"].apply(lambda x: items2[x])
-    # mainTrain["family"] = mainTrain["family"].apply(lambda x: families[x])
-    # mainTrain["class"] = mainTrain["class"].apply(lambda x: classes[x])
+    mainTrain["item_nbr"] = mainTrain["item_nbr"].apply(lambda x: items2[str(x)])
+    mainTrain["family"] = mainTrain["family"].apply(lambda x: families[str(x)])
+    mainTrain["class"] = mainTrain["class"].apply(lambda x: classes[str(x)])
     return mainTrain
 
 print("parrrl")
@@ -71,7 +70,7 @@ if __name__ == '__main__':
         print(x)
         arrays.append(parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(x)),buildDataSet))
     trainArray = pd.concat(arrays)
-    print(trainArray.head(100))
+    print(trainArray.head(10))
 
     trainArray.to_pickle("trainArray50MilOnlyStore39.pickle")
     testArray = parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(23+num)),buildDataSet)

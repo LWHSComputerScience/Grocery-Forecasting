@@ -22,7 +22,7 @@ def loadcsv(fname):
     return all_data
 
 def itemsDict():
-    items = loadcsv('data/items.csv')[1:]
+    items = loadcsv('data/items.csv')
     nums = np.array(items)[:,0]
     uniques = list(set(nums))
     fd = {}
@@ -32,7 +32,7 @@ def itemsDict():
         wf.write(json.dumps(fd))
 
 def groceryDict():
-    items = loadcsv('data/items.csv')[1:]
+    items = loadcsv('data/items.csv')
     fams = np.array(items)[:,1]
     uniques = list(set(fams))
     fd = {}
@@ -42,7 +42,7 @@ def groceryDict():
         wf.write(json.dumps(fd))
 
 def groceryClass():
-    items = loadcsv('data/items.csv')[1:]
+    items = loadcsv('data/items.csv')
     classes = np.array(items)[:,2]
     uniques = list(set(classes))
     fd = {}
