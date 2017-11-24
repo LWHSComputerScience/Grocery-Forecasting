@@ -61,11 +61,11 @@ def createDict(name,column, out):
         wf.write(json.dumps(fd))
 
 
-createDict('stores.csv',1,'store.json')
-createDict('stores.csv',2,'cities.json')
-createDict('stores.csv',3,'states.json')
-createDict('stores.csv',4, 'type.json')
+# createDict('stores.csv',1,'states.json')
+# createDict('stores.csv',2,'type.json')
+# createDict('stores.csv',3,'type.json')
+# createDict('stores.csv',4, 'type.json')
 
-# itemsDict()
-# groceryClass()
-# groceryDict()
+itemsDict()
+groceryClass()
+groceryDict()

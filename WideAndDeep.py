@@ -2,6 +2,11 @@ import tensorflow as tf
 import pandas as pd
 import numpy as np
 
+
+
+
+
+
 num_stores = 1
 num_items=4100
 num_states = 1
