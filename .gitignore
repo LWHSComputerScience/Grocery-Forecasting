@@ -4,7 +4,7 @@
 *.iml
 *.csv
 .idea/.name
-
+*.pickle
 .data/**
 
 *.json

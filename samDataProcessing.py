@@ -3,13 +3,20 @@ import tensorflow as tf
 import pandas as pd
 from os import listdir
 from os.path import isfile, join
+import json
 import seaborn as sns
 from multiprocessing import Pool
 
 
+
+
 def buildDataSet(mainTrain):
+    # mainTrain = mainTrain.loc[mainTrain['store_nbr'] == 39]
     oil = pd.read_pickle("data/temp/oil.pickle")
     stores = pd.read_pickle("data/temp/stores.pickle")
+    # families = pd.read_json("data/Dictionaries/families.json")
+    # items2 = pd.read_json("data/Dictionaries/items.json")
+
     # holidays_events = pd.read_pickle("data/temp/holiday_events.pickle")
     transactions = pd.read_pickle("data/temp/transactions.pickle")
     items = pd.read_pickle("data/temp/items.pickle")
@@ -21,10 +28,14 @@ def buildDataSet(mainTrain):
     mainTrain["month"] = mainTrain["date"].apply(lambda x: x.month)
     mainTrain["year"] = mainTrain["date"].apply(lambda x: x.year)
     mainTrain["day"] = mainTrain["date"].apply(lambda x: x.day)
+    # mainTrain["items"] = mainTrain["items"].apply(lambda x: items2[x])
+    # mainTrain["family"] = mainTrain["family"].apply(lambda x: families[x])
+    # mainTrain["class"] = mainTrain["class"].apply(lambda x: classes[x])
     return mainTrain
+
 print("parrrl")
-num_partitions = 10 #number of partitions to split dataframe
-num_cores = 14 #number of cores on your machine
+num_partitions = 16 #number of partitions to split dataframe
+num_cores = 16 #number of cores on your machine
 def parallelize_dataframe(df, func):
     df_split = np.array_split(df, num_partitions)
     pool = Pool(num_cores)
@@ -32,6 +43,7 @@ def parallelize_dataframe(df, func):
     pool.close()
     pool.join()
     return df
+
 if __name__ == '__main__':
     #only uncomment if first time running dataprep
     # oil = pd.read_csv("data/oil.csv")
@@ -51,13 +63,15 @@ if __name__ == '__main__':
     trainFileList = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
 
 
-    num =8
+    num = 1
 
     arrays = []
     for x in range(23,23+num):
         print(x)
-        arrays.append(parallelize_dataframe( pd.read_csv("data/train/output_%s.csv" %str(x)),buildDataSet))
+        arrays.append(parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(x)),buildDataSet))
     trainArray = pd.concat(arrays)
-    trainArray.to_pickle("trainArray8Mil.pickle")
+    print(trainArray.head(100))
+
+    trainArray.to_pickle("trainArray50MilOnlyStore39.pickle")
     testArray = parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(23+num)),buildDataSet)
-    testArray.to_pickle("testArray8Mil.pickle")
+    testArray.to_pickle("testArray50MilOnlyStore39.pickle")
