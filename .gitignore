@@ -5,7 +5,7 @@
 *.csv
 .idea/.name
 *.pickle
-.data/**
+.data/
 
 *.json
 
