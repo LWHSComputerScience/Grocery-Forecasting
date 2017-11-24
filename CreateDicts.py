@@ -51,6 +51,6 @@ def groceryClass():
     with open('data/Dictionaries/classes.json','w') as wf:
         wf.write(json.dumps(fd))
 
-itemsDict()
-groceryClass()
-groceryDict()
+# itemsDict()
+# groceryClass()
+# groceryDict()
