@@ -54,17 +54,18 @@ def groceryClass():
 def createDict(name,column, out):
     data = loadcsv('data/' + name)
     col = np.array(data)[:,column]
+    uniques = list(set(col))
     fd = {}
-    for i, u in enumerate(col):
+    for i, u in enumerate(uniques):
         fd[u]=i
     with open('data/Dictionaries/' + out,'w') as wf:
         wf.write(json.dumps(fd))
 
 
-createDict('stores.csv',1,'store.json')
-createDict('stores.csv',2,'cities.json')
-createDict('stores.csv',3,'states.json')
-createDict('stores.csv',4, 'type.json')
+createDict('stores.csv',1,'cities.json')
+createDict('stores.csv',2,'states.json')
+createDict('stores.csv',3,'type.json')
+createDict('stores.csv',4, 'cluster.json')
 
 # itemsDict()
 # groceryClass()

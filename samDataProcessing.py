@@ -16,6 +16,10 @@ def buildDataSet(mainTrain):
     families = json.loads(open("data/Dictionaries/families.json").read())
     items2 = json.loads(open("data/Dictionaries/items.json").read())
     classes = json.loads(open("data/Dictionaries/classes.json").read())
+    cities = json.loads(open("data/Dictionaries/cities.json").read())
+    states = json.loads(open("data/Dictionaries/states.json").read())
+    type = json.loads(open("data/Dictionaries/type.json").read())
+    cluster = json.loads(open("data/Dictionaries/cluster.json").read())
 
     # holidays_events = pd.read_pickle("data/temp/holiday_events.pickle")
     transactions = pd.read_pickle("data/temp/transactions.pickle")
@@ -31,6 +35,10 @@ def buildDataSet(mainTrain):
     mainTrain["item_nbr"] = mainTrain["item_nbr"].apply(lambda x: items2[str(x)])
     mainTrain["family"] = mainTrain["family"].apply(lambda x: families[str(x)])
     mainTrain["class"] = mainTrain["class"].apply(lambda x: classes[str(x)])
+    mainTrain["city"] = mainTrain["city"].apply(lambda x: cities[str(x)])
+    mainTrain["state"] = mainTrain["state"].apply(lambda x: states[str(x)])
+    mainTrain["type"] = mainTrain["type"].apply(lambda x: type[str(x)])
+    mainTrain["cluster"] = mainTrain["cluster"].apply(lambda x: cluster[str(x)])
     return mainTrain
 
 print("parrrl")
@@ -63,7 +71,7 @@ if __name__ == '__main__':
     trainFileList = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
 
 
-    num = 1
+    num = 5
 
     arrays = []
     for x in range(23,23+num):
@@ -72,6 +80,6 @@ if __name__ == '__main__':
     trainArray = pd.concat(arrays)
     print(trainArray.head(10))
 
-    trainArray.to_pickle("trainArray50MilOnlyStore39.pickle")
+    trainArray.to_pickle("trainArray5Mil.pickle")
     testArray = parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(23+num)),buildDataSet)
-    testArray.to_pickle("testArray50MilOnlyStore39.pickle")
+    testArray.to_pickle("testArray5Mil.pickle")
