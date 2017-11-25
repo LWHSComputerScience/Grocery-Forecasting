@@ -62,9 +62,9 @@ def createDict(name,column, out):
         wf.write(json.dumps(fd))
 
 
-# createDict('stores.csv',1,'cities.json')
-# createDict('stores.csv',2,'states.json')
-# createDict('stores.csv',3,'type.json')
+createDict('stores.csv',1,'cities.json')
+createDict('stores.csv',2,'states.json')
+createDict('stores.csv',3,'type.json')
 createDict('stores.csv',4, 'cluster.json')
 
 # itemsDict()
