@@ -33,18 +33,18 @@ def buildDataSet(mainTrain):
     mainTrain["month"] = mainTrain["date"].apply(lambda x: x.month)
     mainTrain["year"] = mainTrain["date"].apply(lambda x: x.year)
     mainTrain["day"] = mainTrain["date"].apply(lambda x: x.day)
-    # mainTrain["item_nbr"] = mainTrain["item_nbr"].apply(lambda x: items2[str(x)])
-    # mainTrain["family"] = mainTrain["family"].apply(lambda x: families[str(x)])
-    # mainTrain["class"] = mainTrain["class"].apply(lambda x: classes[str(x)])
-    # mainTrain["city"] = mainTrain["city"].apply(lambda x: cities[str(x)])
-    # mainTrain["state"] = mainTrain["state"].apply(lambda x: states[str(x)])
-    # mainTrain["type"] = mainTrain["type"].apply(lambda x: type[str(x)])
-    # mainTrain["cluster"] = mainTrain["cluster"].apply(lambda x: cluster[str(x)])
+    mainTrain["item_nbr"] = mainTrain["item_nbr"].apply(lambda x: items2[str(x)])
+    mainTrain["family"] = mainTrain["family"].apply(lambda x: families[str(x)])
+    mainTrain["class"] = mainTrain["class"].apply(lambda x: classes[str(x)])
+    mainTrain["city"] = mainTrain["city"].apply(lambda x: cities[str(x)])
+    mainTrain["state"] = mainTrain["state"].apply(lambda x: states[str(x)])
+    mainTrain["type"] = mainTrain["type"].apply(lambda x: type[str(x)])
+    mainTrain["cluster"] = mainTrain["cluster"].apply(lambda x: cluster[str(x)])
     return mainTrain
 
 print("parrrl")
-num_partitions = 4 #number of partitions to split dataframe
-num_cores = 4 #number of cores on your machine
+num_partitions = 16 #number of partitions to split dataframe
+num_cores = 16 #number of cores on your machine
 def parallelize_dataframe(df, func):
     df_split = np.array_split(df, num_partitions)
     pool = Pool(num_cores)
@@ -72,7 +72,13 @@ if __name__ == '__main__':
     trainFileList = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
 
 
+<<<<<<< HEAD
     num=1
+=======
+
+    num=1
+
+>>>>>>> origin/master
 
     arrays = []
     for x in range(23,23+num):
@@ -82,7 +88,10 @@ if __name__ == '__main__':
     print(trainArray.head(10))
 
 
+<<<<<<< HEAD
     trainArray.to_pickle("trainArray5Mil.pickle")
+=======
+>>>>>>> origin/master
     trainArray.to_pickle("trainArray1Mil.pickle")
     testArray = parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(23+num)),buildDataSet)
     testArray.to_pickle("testArray1Mil.pickle")
