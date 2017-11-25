@@ -10,7 +10,7 @@ from multiprocessing import Pool
 
 
 def buildDataSet(mainTrain):
-    # mainTrain = mainTrain.loc[mainTrain['store_nbr'] == 39]
+    mainTrain = mainTrain.loc[mainTrain['store_nbr'] == 39]
     oil = pd.read_pickle("data/temp/oil.pickle")
     stores = pd.read_pickle("data/temp/stores.pickle")
     families = json.loads(open("data/Dictionaries/families.json").read())
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 
 
 
-    num=1
+    num=40
 
 
     arrays = []
@@ -84,6 +84,6 @@ if __name__ == '__main__':
     print(trainArray.head(10))
 
 
-    trainArray.to_pickle("trainArray1Mil.pickle")
-    testArray = parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(23+num)),buildDataSet)
-    testArray.to_pickle("testArray1Mil.pickle")
+    trainArray.to_pickle("trainArray40Mil39.pickle")
+    # testArray = parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(23+num)),buildDataSet)
+    # testArray.to_pickle("testArray1Mil.pickle")
