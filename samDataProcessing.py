@@ -72,9 +72,13 @@ if __name__ == '__main__':
     trainFileList = [join(mypath, f) for f in listdir(mypath) if isfile(join(mypath, f))]
 
 
+<<<<<<< HEAD
+    num=1
+=======
 
     num=40
 
+>>>>>>> origin/master
 
     arrays = []
     for x in range(23,23+num):
@@ -84,6 +88,16 @@ if __name__ == '__main__':
     print(trainArray.head(10))
 
 
+<<<<<<< HEAD
     trainArray.to_pickle("trainArray40Mil39.pickle")
     # testArray = parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(23+num)),buildDataSet)
     # testArray.to_pickle("testArray1Mil.pickle")
+=======
+<<<<<<< HEAD
+    trainArray.to_pickle("trainArray5Mil.pickle")
+=======
+>>>>>>> origin/master
+    trainArray.to_pickle("trainArray1Mil.pickle")
+    testArray = parallelize_dataframe(pd.read_csv("data/train/output_%s.csv" %str(23+num)),buildDataSet)
+    testArray.to_pickle("testArray1Mil.pickle")
+>>>>>>> origin/master
