@@ -46,7 +46,7 @@ deep_columns = [
     #this is another way to densify stuff
     tf.feature_column.embedding_column(item_nbr, dimension=num_items)
 ]
-model = tf.estimator.DNNLinearCombinedClassifier(
+model = tf.contrib.learn.DNNRegressor(
     model_dir='some dir',#directory to save model
     linear_feature_columns=base_features + crossed_columns,
     dnn_feature_columns=deep_columns,
@@ -60,6 +60,6 @@ input_fn = tf.estimator.inputs.pandas_input_fn(
     shuffle=False)
 
 for epoch in range(train_epochs):
-    model.train(input_fn())
+    model.fit(input_fn())
     if epoch%1000==0:
         print(model.evaluate(input_fn()))
